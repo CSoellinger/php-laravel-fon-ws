@@ -57,9 +57,13 @@ php artisan vendor:publish --provider="CSoellinger\Laravel\FonWebservices\FonWeb
 
 This will create a `config/fon-webservices.php` file in your application.
 
-### Environment Variables
+### Configuration
 
-Add your FinanzOnline credentials to your `.env` file:
+The package reads credentials from the `config/fon-webservices.php` file. By default, it uses environment variables, but you can configure credentials from **any source** (database, cache, config files, etc.).
+
+**Option 1: Using Environment Variables** (recommended for local development)
+
+Add to your `.env` file:
 
 ```env
 FON_TE_ID=your_teilnehmer_id
@@ -68,7 +72,29 @@ FON_BEN_ID=your_benutzer_id
 FON_BEN_PIN=your_benutzer_pin
 ```
 
-> **⚠️ Security Warning:** Never commit credentials to version control!
+**Option 2: From Database** (recommended for production)
+
+Edit `config/fon-webservices.php`:
+
+```php
+'credentials' => [
+    'te_id' => DB::table('settings')->value('fon_te_id'),
+    'te_uid' => DB::table('settings')->value('fon_te_uid'),
+    'ben_id' => DB::table('settings')->value('fon_ben_id'),
+    'ben_pin' => decrypt(DB::table('settings')->value('fon_ben_pin')),
+],
+```
+
+**Option 3: From Cache or Other Sources**
+
+```php
+'credentials' => [
+    'te_id' => Cache::get('fon_credentials')['te_id'],
+    // ... or any other source
+],
+```
+
+> **⚠️ Security Warning:** Never commit credentials to version control! Store sensitive data encrypted in your database or use Laravel's encryption features.
 
 ## Usage
 
@@ -299,14 +325,18 @@ The `config/fon-webservices.php` file allows you to customize:
 
 ### SOAP Options
 
+These options are passed directly to PHP's [SoapClient constructor](https://www.php.net/manual/en/soapclient.construct.php) and control the underlying SOAP behavior:
+
 ```php
 'soap_options' => [
-    'trace' => env('FON_SOAP_TRACE', false),
-    'exceptions' => env('FON_SOAP_EXCEPTIONS', true),
-    'connection_timeout' => env('FON_SOAP_TIMEOUT', 30),
-    'cache_wsdl' => env('FON_SOAP_CACHE_WSDL', WSDL_CACHE_DISK),
+    'trace' => env('FON_SOAP_TRACE', false),           // Enable request/response tracing (debugging)
+    'exceptions' => env('FON_SOAP_EXCEPTIONS', true),  // Throw exceptions on SOAP errors
+    'connection_timeout' => env('FON_SOAP_TIMEOUT', 30), // Connection timeout in seconds
+    'cache_wsdl' => env('FON_SOAP_CACHE_WSDL', WSDL_CACHE_DISK), // WSDL caching mode
 ],
 ```
+
+You can add any [valid SoapClient option](https://www.php.net/manual/en/soapclient.construct.php) here. Common options include `compression`, `user_agent`, `proxy_host`, etc.
 
 ### Disable Unused Services
 
@@ -341,7 +371,9 @@ git clone https://github.com/csoellinger/php-laravel-fon-ws.git
 cd php-laravel-fon-ws
 cp .env.example .env
 
-# Add your FON credentials to .env
+# Add your FON credentials to .env (for local testing)
+# Or configure them in config/fon-webservices.php from any source
+
 # Install dependencies and start
 composer install
 ./vendor/bin/sail up -d
