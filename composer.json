@@ -1,0 +1,81 @@
+{
+    "name": "csoellinger/php-laravel-fon-ws",
+    "description": "Laravel integration for the Austrian FinanzOnline (FON) web services",
+    "version": "1.0.0",
+    "keywords": [
+        "laravel",
+        "finanzonline",
+        "austrian-tax",
+        "bmf",
+        "vat-validation",
+        "soap",
+        "webservices"
+    ],
+    "homepage": "https://github.com/csoellinger/php-laravel-fon-ws",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Söllinger",
+            "email": "christian.soellinger@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "csoellinger/php-fon-webservices": "^2.0",
+        "illuminate/console": "^11.0|^12.0",
+        "illuminate/contracts": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "phpunit/phpunit": "^11.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.32"
+    },
+    "autoload": {
+        "psr-4": {
+            "CSoellinger\\Laravel\\FonWebservices\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CSoellinger\\Laravel\\FonWebservices\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "platform": {
+            "php": "8.3.28"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CSoellinger\\Laravel\\FonWebservices\\FonWebservicesServiceProvider"
+            ],
+            "aliases": {
+                "FonSession": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonSession",
+                "FonVatIdCheck": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonVatIdCheck",
+                "FonDataboxDownload": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonDataboxDownload",
+                "FonFileUpload": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonFileUpload",
+                "FonBankDataTransmission": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonBankDataTransmission",
+                "FonQueryDataTransmission": "CSoellinger\\Laravel\\FonWebservices\\Facades\\FonQueryDataTransmission"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

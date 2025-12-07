@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    tmpDir: build/phpstan
+    ignoreErrors:
+        # Command input validation - Laravel handles these types properly
+        - '#Part \$\w+ \(array\|bool\|string\|null\) of encapsed string cannot be cast to string#'
+        - '#Parameter .+ of method .+ expects string, array\|bool\|string\|null given#'
+        - '#Parameter .+ of method .+ expects string, string\|false given#'
+        # Defensive null checks - keep for runtime safety even if PHPDoc says non-null
+        - '#Ternary operator condition is always true#'
