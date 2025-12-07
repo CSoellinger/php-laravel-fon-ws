@@ -36,8 +36,7 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, soap
           coverage: none
 
-      - name: Create .env file from secret
-        if: ${{ secrets.ENV_FILE != '' }}
+      - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Setup problem matchers
