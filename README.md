@@ -34,8 +34,19 @@ A Laravel package providing seamless integration with the Austrian FinanzOnline 
 ## Requirements
 
 - PHP 8.1, 8.2, 8.3, or 8.4
-- Laravel 11.x or 12.x
+- Laravel 10.x, 11.x, or 12.x
 - PHP SOAP extension enabled
+
+**Compatibility Matrix:**
+
+| PHP Version | Laravel 10 | Laravel 11 | Laravel 12 |
+|-------------|-----------|-----------|-----------|
+| 8.1         | ✅        | ❌        | ❌        |
+| 8.2         | ✅        | ✅        | ✅        |
+| 8.3         | ✅        | ✅        | ✅        |
+| 8.4         | ✅        | ✅        | ✅        |
+
+> **Note:** If you're using PHP 8.1, you must use Laravel 10. Laravel 11+ requires PHP 8.2+.
 
 > **📦 Multiple PHP Versions:** This package is tested against PHP 8.1-8.4. See [PHP_VERSIONS.md](PHP_VERSIONS.md) for testing with different versions locally.
 

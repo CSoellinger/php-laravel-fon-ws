@@ -27,7 +27,6 @@ use CSoellinger\Laravel\FonWebservices\Facades\FonVatIdCheck;
  */
 describe('Service Usage Patterns', function (): void {
     it('can inject VatIdCheckWs via dependency injection', function (): void {
-        // Mock the service first
         $result = new VatIdCheckValidLevelOne;
         $result->valid = true;
 
@@ -35,7 +34,6 @@ describe('Service Usage Patterns', function (): void {
         $mock->shouldReceive('check')->once()->andReturn($result);
         $this->app->instance(VatIdCheckWs::class, $mock);
 
-        // This simulates how you'd use it in a controller or service
         $service = new class(app(VatIdCheckWs::class))
         {
             public function __construct(
@@ -96,7 +94,6 @@ describe('Service Usage Patterns', function (): void {
     });
 
     it('can be used in a simulated controller action', function (): void {
-        // Mock the service
         $result = new \CSoellinger\FonWebservices\Model\VatIdCheckValidLevelTwo;
         $result->valid = true;
         $result->name = 'Test Company GmbH';
@@ -106,7 +103,6 @@ describe('Service Usage Patterns', function (): void {
         $mock->shouldReceive('check')->once()->andReturn($result);
         $this->app->instance(VatIdCheckWs::class, $mock);
 
-        // This simulates a controller method
         $controller = new class(app(VatIdCheckWs::class))
         {
             public function __construct(

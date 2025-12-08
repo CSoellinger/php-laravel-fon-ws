@@ -20,13 +20,11 @@ it('registers FonCredential as a singleton', function (): void {
 it('creates FonCredential with correct configuration', function (): void {
     $credential = app(FonCredential::class);
 
-    // Check that credentials are loaded from config (not null/empty)
     expect($credential->teId)->toBeString()->not->toBeEmpty()
         ->and($credential->teUid)->toBeString()->not->toBeEmpty()
         ->and($credential->benId)->toBeString()->not->toBeEmpty()
         ->and($credential->benPin)->toBeString()->not->toBeEmpty();
 
-    // Verify they match the configured values
     expect($credential->teId)->toBe(config('fon-webservices.credentials.te_id'))
         ->and($credential->teUid)->toBe(config('fon-webservices.credentials.te_uid'))
         ->and($credential->benId)->toBe(config('fon-webservices.credentials.ben_id'))

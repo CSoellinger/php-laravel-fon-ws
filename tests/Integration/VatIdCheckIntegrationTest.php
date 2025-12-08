@@ -18,7 +18,6 @@ use CSoellinger\FonWebservices\VatIdCheckWs;
  */
 describe('VatIdCheck Integration Tests', function (): void {
     beforeEach(function (): void {
-        // Skip if using dummy/placeholder credentials
         $teId = config('fon-webservices.credentials.te_id');
         $hasRealCredentials = $teId
             && $teId !== 'TEST12345'
@@ -35,7 +34,6 @@ describe('VatIdCheck Integration Tests', function (): void {
     it('checks a known invalid VAT ID', function (): void {
         $vatIdCheck = app(VatIdCheckWs::class);
 
-        // ATU12345678 is a test/invalid VAT ID
         $result = $vatIdCheck->check('ATU12345678', VatIdCheckLevel::SimpleCheck);
 
         expect($result)->toBeInstanceOf(VatIdCheckInvalid::class)
@@ -46,7 +44,6 @@ describe('VatIdCheck Integration Tests', function (): void {
     it('checks a known valid VAT ID at level 1', function (): void {
         $vatIdCheck = app(VatIdCheckWs::class);
 
-        // ATU36975500 is McDonald's Franchise GmbH (known valid VAT ID from examples)
         $result = $vatIdCheck->check('ATU36975500', VatIdCheckLevel::SimpleCheck);
 
         expect($result)->toBeInstanceOf(VatIdCheckValidLevelOne::class)
@@ -56,7 +53,6 @@ describe('VatIdCheck Integration Tests', function (): void {
     it('checks a known valid VAT ID at level 2 with company details', function (): void {
         $vatIdCheck = app(VatIdCheckWs::class);
 
-        // ATU36975500 is McDonald's Franchise GmbH
         $result = $vatIdCheck->check('ATU36975500', VatIdCheckLevel::FullCheck);
 
         expect($result)->toBeInstanceOf(VatIdCheckValidLevelTwo::class)

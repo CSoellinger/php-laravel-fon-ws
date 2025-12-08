@@ -43,7 +43,6 @@ class ListDataboxCommand extends Command
 
         $asJson = $this->option('json');
 
-        // Parse dates if provided
         $fromDate = $from ? new \DateTime($from) : null;
         $toDate = $to ? new \DateTime($to) : null;
 

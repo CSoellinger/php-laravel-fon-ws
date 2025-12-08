@@ -39,7 +39,6 @@ class CheckVatCommand extends Command
         $level = (int) $this->option('level');
         $asJson = $this->option('json');
 
-        // Validate level
         if (! in_array($level, [1, 2], true)) {
             $this->error('Level must be 1 or 2');
 

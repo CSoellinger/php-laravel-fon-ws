@@ -28,7 +28,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             'fon-webservices'
         );
 
-        // Register FonCredential as a singleton
         $this->app->singleton(FonCredential::class, function ($app) {
             $credentials = config('fon-webservices.credentials');
 
@@ -40,7 +39,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             );
         });
 
-        // Register SessionWs as a singleton
         $this->app->singleton(SessionWs::class, function ($app) {
             $soapOptions = config('fon-webservices.soap_options', []);
 
@@ -50,7 +48,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             );
         });
 
-        // Register VatIdCheckWs if enabled
         if (config('fon-webservices.services.vat_id_check', true)) {
             $this->app->singleton(VatIdCheckWs::class, function ($app) {
                 $soapOptions = config('fon-webservices.soap_options', []);
@@ -62,7 +59,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             });
         }
 
-        // Register DataboxDownloadWs if enabled
         if (config('fon-webservices.services.databox_download', true)) {
             $this->app->singleton(DataboxDownloadWs::class, function ($app) {
                 $soapOptions = config('fon-webservices.soap_options', []);
@@ -74,7 +70,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             });
         }
 
-        // Register FileUploadWs if enabled
         if (config('fon-webservices.services.file_upload', true)) {
             $this->app->singleton(FileUploadWs::class, function ($app) {
                 $soapOptions = config('fon-webservices.soap_options', []);
@@ -86,7 +81,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             });
         }
 
-        // Register BankDataTransmissionWs if enabled
         if (config('fon-webservices.services.bank_data_transmission', true)) {
             $this->app->singleton(BankDataTransmissionWs::class, function ($app) {
                 $soapOptions = config('fon-webservices.soap_options', []);
@@ -98,7 +92,6 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
             });
         }
 
-        // Register QueryDataTransmissionWs if enabled
         if (config('fon-webservices.services.query_data_transmission', true)) {
             $this->app->singleton(QueryDataTransmissionWs::class, function ($app) {
                 $soapOptions = config('fon-webservices.soap_options', []);
@@ -117,12 +110,10 @@ class FonWebservicesServiceProvider extends ServiceProvider implements Deferrabl
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            // Publish configuration file
             $this->publishes([
                 __DIR__.'/../config/fon-webservices.php' => config_path('fon-webservices.php'),
             ], 'fon-webservices-config');
 
-            // Register commands
             $this->commands([
                 CheckVatCommand::class,
                 ListDataboxCommand::class,

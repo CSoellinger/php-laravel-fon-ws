@@ -29,7 +29,6 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app): void
     {
-        // Load credentials from environment variables or use dummy credentials for unit/feature tests
         config()->set('fon-webservices.credentials', [
             'te_id' => env('FON_T_ID', 'TEST12345'),
             'te_uid' => env('FON_T_UID', 'ATU12345678'),
